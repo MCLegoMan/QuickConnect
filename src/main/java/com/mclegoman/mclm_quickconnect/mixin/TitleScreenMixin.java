@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
@@ -35,4 +36,8 @@ public abstract class TitleScreenMixin extends Screen {
 
 	    }).positionAndSize(this.width / 2 - 100, y + spacingY * 2, 200, 20).tooltip(tooltip).build()).active = bl;
     }
+	@Inject(method = "areRealmsNotificationsEnabled", at = @At(value = "HEAD"), cancellable = true)
+	public void areRealmsNotificationsEnabled(CallbackInfoReturnable<Boolean> cir) {
+		cir.setReturnValue(false);
+	}
 }
