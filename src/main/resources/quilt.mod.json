@@ -1,0 +1,33 @@
+{
+	"schema_version": 1,
+	"quilt_loader": {
+		"group": "${group}",
+		"id": "mclm_quickconnect",
+		"version": "${version}",
+		"metadata": {
+			"name": "Quick Connect",
+			"description": "Adds a button the the title screen that connects to your configured server.",
+			"contributors": {
+				"MCLegoMan": "Owner"
+			},
+			"contact": {},
+			"icon": "assets/mclm_quickconnect/icon.png"
+		},
+		"intermediate_mappings": "net.fabricmc:intermediary",
+		"depends": [
+			{
+				"id": "quilt_loader",
+				"versions": "*"
+			},
+			{
+				"id": "quilted_fabric_api",
+				"versions": "*"
+			},
+			{
+				"id": "minecraft",
+				"versions": "~1.21"
+			}
+		]
+	},
+	"mixin": "mclm_quickconnect.mixins.json"
+}
