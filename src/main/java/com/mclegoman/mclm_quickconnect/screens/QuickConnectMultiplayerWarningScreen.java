@@ -1,6 +1,7 @@
 package com.mclegoman.mclm_quickconnect.screens;
 
 import com.mclegoman.mclm_quickconnect.Connect;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.WarningScreen;
 import net.minecraft.client.gui.widget.button.ButtonWidget;
@@ -26,11 +27,11 @@ public class QuickConnectMultiplayerWarningScreen extends WarningScreen {
 		LinearLayoutWidget linearLayoutWidget = LinearLayoutWidget.createHorizontal().setSpacing(8);
 		linearLayoutWidget.add(ButtonWidget.builder(CommonTexts.PROCEED, (buttonWidget) -> {
 			if (this.checkbox.isChecked()) {
-				this.client.options.skipMultiplayerWarning = true;
-				this.client.options.write();
+				MinecraftClient.getInstance().options.skipMultiplayerWarning = true;
+				MinecraftClient.getInstance().options.write();
 			}
 
-			Connect.connect(this.client, this.parent);
+			Connect.connect(MinecraftClient.getInstance(), this.parent);
 		}).build());
 		linearLayoutWidget.add(ButtonWidget.builder(CommonTexts.BACK, (buttonWidget) -> {
 			this.closeScreen();
@@ -39,7 +40,7 @@ public class QuickConnectMultiplayerWarningScreen extends WarningScreen {
 	}
 
 	public void closeScreen() {
-		this.client.setScreen(this.parent);
+		MinecraftClient.getInstance().setScreen(this.parent);
 	}
 
 	static {

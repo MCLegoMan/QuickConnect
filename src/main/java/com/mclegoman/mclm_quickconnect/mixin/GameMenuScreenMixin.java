@@ -1,7 +1,7 @@
 package com.mclegoman.mclm_quickconnect.mixin;
 
-import com.mclegoman.mclm_quickconnect.Config;
 import com.mclegoman.mclm_quickconnect.Connect;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.GenericMessageScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -29,23 +29,23 @@ public abstract class GameMenuScreenMixin extends Screen {
 
 	@Inject(method = "onDisconnect", at = @At(value = "HEAD"), cancellable = true)
 	private void onDisconnect(CallbackInfo ci) {
-		boolean bl = this.client.isInSingleplayer();
-		ServerInfo serverInfo = this.client.getCurrentServerEntry();
-		this.client.world.disconnect();
+		boolean bl = MinecraftClient.getInstance().isInSingleplayer();
+		ServerInfo serverInfo = MinecraftClient.getInstance().getCurrentServerEntry();
+		MinecraftClient.getInstance().world.disconnect();
 		if (bl) {
-			this.client.disconnect(new GenericMessageScreen(SAVING_WORLD));
+			MinecraftClient.getInstance().disconnect(new GenericMessageScreen(SAVING_WORLD));
 		} else {
-			this.client.disconnect();
+			MinecraftClient.getInstance().disconnect();
 		}
 
 		TitleScreen titleScreen = new TitleScreen();
 		if (bl) {
-			this.client.setScreen(titleScreen);
+			MinecraftClient.getInstance().setScreen(titleScreen);
 		} else if (serverInfo != null && serverInfo.isRealm()) {
-			this.client.setScreen(new RealmsMainScreen(titleScreen));
+			MinecraftClient.getInstance().setScreen(new RealmsMainScreen(titleScreen));
 		} else {
-			if (serverInfo != null && Connect.parent instanceof TitleScreen) this.client.setScreen(Connect.parent);
-			else this.client.setScreen(new SelectServerScreen(titleScreen));
+			if (serverInfo != null && Connect.parent instanceof TitleScreen) MinecraftClient.getInstance().setScreen(Connect.parent);
+			else MinecraftClient.getInstance().setScreen(new SelectServerScreen(titleScreen));
 		}
 		ci.cancel();
     }
